@@ -4,53 +4,42 @@
 Set up a Linux server following **enterprise security best practices**:
 - No direct root SSH access
 - Personal user with sudo privileges
-- SSH key–based authentication
+- SSH key-based authentication
 - Proper permission hardening
 
-This task focuses on **security-first mindset**, not tools.
+This day focuses on building a **security-first DevOps mindset** before installing any tools.
 
 ---
 
-## Environment
-- Cloud: AWS EC2
-- OS: Amazon Linux 2023
-- Access: SSH (key-based)
-- Local OS: Windows (PowerShell)
+## Step 1: Verify Server Session
+After logging into the server, verify basic session details.
 
----
-
-## Step 1: Launch EC2 Instance
-- Created EC2 instance using Amazon Linux
-- Downloaded SSH key pair (`devops.pem`)
-- Configured Security Group to allow SSH (port 22)
-
----
-
-## Step 2: Login to Server via SSH
 ```bash
-ssh -i devops.pem ec2-user@<server_ip>
-```
-Verify session:
-
 whoami
 hostname
 uptime
+```
+Step 2: Switch to Root (Temporary)
 
-Step 3: Switch to Root (Temporary)
+Switch to root user only for administrative setup.
+
 sudo su
 
 
-Root access is used only for administrative setup, not daily work.
+Root access is used only for administrative configuration, not daily work.
 
-Step 4: Create Personal User
+Step 3: Create Personal User
+
+Create a personal Linux user for daily operations.
+
 useradd pranit
 
 
-(Optional password – not required for key-based login)
+(Optional: Set password — not required for SSH key-based login)
 
 passwd pranit
 
-Step 5: Configure SSH Access for Personal User
+Step 4: Configure SSH Access for Personal User
 Create .ssh directory
 mkdir -p /home/pranit/.ssh
 chmod 700 /home/pranit/.ssh
@@ -58,19 +47,17 @@ chmod 700 /home/pranit/.ssh
 Copy SSH public key
 cp /home/ec2-user/.ssh/authorized_keys /home/pranit/.ssh/
 
-Fix ownership & permissions
+Fix ownership and permissions
 chmod 600 /home/pranit/.ssh/authorized_keys
 chown -R pranit:pranit /home/pranit/.ssh
 
-Step 6: Give Sudo Access (wheel group)
+Step 5: Give Sudo Access (wheel group)
 
 Amazon Linux controls sudo access using the wheel group.
 
 usermod -aG wheel pranit
 
-
-Verify:
-
+Verify group membership
 groups pranit
 
 
@@ -78,15 +65,13 @@ Expected output:
 
 pranit wheel
 
-Step 7: Test Login as Personal User (MANDATORY)
+Step 6: Test Login as Personal User (MANDATORY)
 
-Open a new terminal (do not logout existing session):
+Open a new terminal (do not logout the existing session).
 
 ssh -i devops.pem pranit@<server_ip>
 
-
-Test sudo:
-
+Test sudo access
 sudo whoami
 
 
@@ -94,27 +79,39 @@ Expected output:
 
 root
 
-Step 8: Disable Root SSH Login
+Step 7: Disable Root SSH Login
 
-Edit SSH configuration:
+Edit the SSH configuration file.
 
 sudo vi /etc/ssh/sshd_config
 
 
-Set (add or modify):
+Set or modify the following values:
 
 PermitRootLogin no
 PasswordAuthentication no
 PubkeyAuthentication yes
 
 
-Restart SSH service:
+Restart SSH service to apply changes.
 
 sudo systemctl restart sshd
 
-Step 9: Final Verification
+Step 8: Final Verification
 Root login should FAIL
 ssh root@<server_ip>
 
 Personal user login should WORK
 ssh pranit@<server_ip>
+
+Why Root Login Is Dangerous
+
+Root has unlimited system privileges
+
+No accountability or audit trail
+
+High risk of accidental system damage
+
+First target for brute-force attacks
+
+Violates the principle of least privilege
