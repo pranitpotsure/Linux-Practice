@@ -1,5 +1,3 @@
-
-```md
 # DAY 0 – Server & Mindset Setup (Linux + AWS)
 
 ## Objective
@@ -20,11 +18,9 @@ After logging into the server, verify basic session details.
 whoami
 hostname
 uptime
+```
 Step 2: Switch to Root (Temporary)
 Switch to root user only for administrative setup.
-
-bash
-Copy code
 sudo su
 Root access is used only for administrative configuration, not daily work.
 
@@ -121,52 +117,3 @@ High risk of accidental system damage
 First target for brute-force attacks
 
 Violates the principle of least privilege
-
-Outcome
-Secure SSH access using key-based authentication
-
-Personal user with controlled sudo privileges
-
-Root SSH login disabled
-
-Enterprise-level Linux server hardening completed
-
-Next Steps
-DAY 1: Linux filesystem and permissions
-
-Advanced SSH hardening
-
-User and group management
-
-Production Linux troubleshooting
-
-Author: Pranit Potsure
-Track: DevOps / Cloud Engineering
-
-yaml
-Copy code
-
----
-
-## 🧠 WHY THIS FIX WORKS
-- No commands outside code blocks
-- No inline shell commands
-- Clean Markdown hierarchy
-- GitHub renderer stays consistent
-
----
-
-## ✅ Final Checklist for Future `.md` Files
-✔ Use `##` for steps  
-✔ Use `###` for sub-steps  
-✔ **Every command inside ```bash**  
-✔ Never mix text + command on same line  
-
----
-
-If you want next:
-- 📁 `DAY-1-Linux-Filesystem.md`
-- 📘 Professional `README.md` for whole repo
-- 🧠 Interview-ready documentation style
-
-Just tell me 👍
