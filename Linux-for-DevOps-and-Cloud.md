@@ -1,6 +1,6 @@
 
 
-***New to Linux? Below assignment covering all the required basics of Linux to be familiar for an DevOps engineer.***
+## New to Linux? Below assignment covering all the required basics of Linux to be familiar for an DevOps engineer.
 
 ![Linux](https://imgur.com/xedzuwy.png)
 
